@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ResourceSmash - Landing Page</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --bg-dark: #121212;
+      --card-bg: #1E1E2F;
+      --text-light: #ECECEC;
+      --blue: #6C63FF;
+      --mint: #00D1FF;
+      --purple: #B983FF;
+      --white: #FFFFFF;
+      --dark-blue: #5650d8;
+      --dark-mint: #00b8e5;
+      
+      /* Additional colors for accessibility */
+      --text-medium: #9E9E9E;
+      --text-high-contrast: #FFFFFF;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', 'Roboto', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+      line-height: 1.6;
+    }
+    
+    /* Accessibility - focus styles */
+    a:focus, button:focus {
+      outline: 2px solid var(--mint);
+      outline-offset: 3px;
+    }
+    
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+    
+    header {
+      position: sticky;
+      top: 0;
+      background-color: var(--card-bg);
+      padding: 1.5rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+      z-index: 1000;
+      transition: padding 0.3s ease;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+    
+    header h1 {
+      margin: 0;
+      padding-left: 10px;
+      font-size: 2rem;
+      letter-spacing: 0.5px;
+      color: var(--blue);
+    }
+    
+    nav {
+      display: flex;
+      align-items: center;
+    }
+    
+    nav a {
+      margin-left: 1.5rem;
+      text-decoration: none;
+      color: var(--text-light);
+      font-weight: 500;
+      transition: color 0.3s;
+      position: relative;
+    }
+    
+    nav a:hover {
+      color: var(--mint);
+    }
+    
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: var(--mint);
+      transition: width 0.3s ease;
+    }
+    
+    nav a:hover::after {
+      width: 100%;
+    }
+    
+    /* Fix for subject grid links to prevent underline effect */
+    .subject-grid a {
+      text-decoration: none;
+      color: inherit;
+      position: relative;
+    }
+    
+    .subject-grid a::after {
+      content: none; /* Remove the after pseudo-element */
+    }
+    
+    .subject-grid a:hover::after {
+      width: 0; /* Ensure no width for the underline */
+    }
+    
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text-light);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    
+    .hero {
+      text-align: center;
+      padding: 7rem 2rem 5rem;
+      background: linear-gradient(135deg, rgba(30,30,47,0.8) 0%, rgba(18,18,18,0.9) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(ellipse at center, rgba(108,99,255,0.1) 0%, rgba(0,0,0,0) 70%);
+      z-index: -1;
+      animation: pulse 15s infinite;
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 0.5; }
+      50% { transform: scale(1.05); opacity: 0.7; }
+      100% { transform: scale(1); opacity: 0.5; }
+    }
+    
+    .hero-content {
+      max-width: 800px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .hero h2 {
+      font-size: 3rem;
+      margin-bottom: 1.5rem;
+      color: var(--white);
+      text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+    
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 2.5rem;
+      color: #CFCFCF;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .btn {
+      display: inline-block;
+      padding: 0.75rem 2rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: 500;
+      cursor: pointer;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+    
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.7s;
+      z-index: -1;
+    }
+    
+    .btn:hover::before {
+      left: 100%;
+    }
+    
+    .btn-primary {
+      background-color: var(--blue);
+      color: var(--white);
+      box-shadow: 0 4px 15px rgba(108,99,255,0.4);
+      transition: transform 0.2s, background-color 0.3s, box-shadow 0.3s;
+    }
+    
+    .btn-primary:hover {
+      background-color: var(--mint);
+      transform: scale(1.05);
+      box-shadow: 0 6px 20px rgba(0,209,255,0.6);
+    }
+    
+    .btn-primary:active {
+      transform: scale(1);
+      box-shadow: 0 2px 8px rgba(108,99,255,0.3);
+    }
+    
+    .section-title {
+      text-align: center;
+      margin-bottom: 3rem;
+      color: var(--white);
+      font-size: 2.2rem;
+    }
+    
+    .section-title span {
+      color: var(--mint);
+    }
+    
+    .features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin: 5rem auto;
+      max-width: 1200px;
+      padding: 0 2rem;
+    }
+    
+    .feature-card {
+      background-color: var(--card-bg);
+      padding: 2.5rem 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    
+    .feature-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+    }
+    
+    .feature-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1.5rem;
+      color: var(--blue);
+      background: rgba(108,99,255,0.1);
+      height: 80px;
+      width: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+    }
+    
+    .feature-card:hover .feature-icon {
+      background: rgba(108,99,255,0.2);
+      color: var(--mint);
+      transform: scale(1.1);
+    }
+    
+    .feature-card h3 {
+      color: var(--purple);
+      margin-bottom: 1rem;
+      font-size: 1.4rem;
+    }
+    
+    .feature-card p {
+      color: #D3D3D3;
+    }
+    
+    /* Testimonials styles - added from first version */
+    .testimonials {
+      background-color: rgba(30,30,47,0.5);
+      padding: 5rem 2rem;
+      margin: 4rem 0;
+    }
+    
+    .testimonial-container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    
+    .testimonial-card {
+      background-color: var(--card-bg);
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      margin-bottom: 2rem;
+      position: relative;
+    }
+    
+    .testimonial-text {
+      font-style: italic;
+      margin-bottom: 1.5rem;
+      color: var(--text-light);
+    }
+    
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+    }
+    
+    .author-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: var(--blue);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 1rem;
+      color: var(--white);
+      font-weight: bold;
+    }
+    
+    .author-info h4 {
+      margin: 0;
+      color: var(--purple);
+    }
+    
+    .author-info p {
+      margin: 0;
+      color: var(--text-medium);
+      font-size: 0.9rem;
+    }
+    
+    footer {
+      background-color: var(--card-bg);
+      padding: 3rem 2rem;
+      padding-top: 0px;
+    }
+    
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .footer-col {
+      min-width: 200px;
+      margin-bottom: 2rem;
+    }
+    
+    .footer-col h3 {
+      color: var(--purple);
+      margin-bottom: 1.5rem;
+    }
+    
+    .footer-col ul {
+      list-style: none;
+    }
+    
+    .footer-col ul li {
+      margin-bottom: 0.75rem;
+    }
+    
+    .footer-col a {
+      text-decoration: none;
+      color: var(--text-light);
+      transition: color 0.3s;
+    }
+    
+    .footer-col a:hover {
+      color: var(--mint);
+    }
+    
+    .social-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+    }
+    
+    .social-links a {
+      display: flex;
+      align-items: center;
+      width: 40px;
+      height: 40px;
+      background-color: rgba(108,99,255,0.1);
+      border-radius: 50%;
+      color: var(--blue);
+      justify-content: center;
+      transition: all 0.3s;
+    }
+    
+    .social-links a:hover {
+      background-color: var(--blue);
+      color: var(--white);
+      transform: translateY(-3px);
+    }
+    
+    .copyright {
+      text-align: center;
+      padding-top: 2rem;
+      margin-top: 2rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      color: var(--text-medium);
+    }
+    
+    .copyright a {
+      color: var(--blue);
+      text-decoration: none;
+    }
+    
+    /* Popup Modal */
+    .popup-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    
+    .popup-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .popup-card {
+      background-color: var(--card-bg);
+      width: 90%;
+      max-width: 500px; /* Reduced from 600px */
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+      transform: translateY(30px);
+      opacity: 0;
+      transition: transform 0.4s ease, opacity 0.4s ease;
+      position: relative;
+    }
+    
+    .popup-overlay.active .popup-card {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    
+    .popup-header {
+      background: linear-gradient(135deg, var(--blue) 0%, var(--mint) 100%);
+      padding: 1.2rem; /* Reduced from 1.5rem */
+      position: relative;
+      text-align: center;
+    }
+    
+    .popup-header h2 {
+      color: var(--white);
+      margin: 0;
+      font-size: 1.6rem; /* Reduced from 1.8rem */
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+    
+    .popup-close {
+      position: absolute;
+      top: 0.8rem; /* Reduced from 1rem */
+      right: 0.8rem; /* Reduced from 1rem */
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      width: 28px; /* Reduced from 32px */
+      height: 28px; /* Reduced from 32px */
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--white);
+      font-size: 1rem; /* Reduced from 1.2rem */
+      transition: all 0.2s ease;
+    }
+    
+    .popup-close:hover {
+      background: rgba(255, 255, 255, 0.4);
+      transform: rotate(90deg);
+    }
+    
+    .popup-body {
+      padding: 1.5rem; /* Reduced from 2rem */
+    }
+    
+    .popup-content {
+      margin-bottom: 1rem; /* Reduced from 1.5rem */
+    }
+    
+    .popup-content p {
+      color: var(--text-light);
+      margin-bottom: 1rem; /* Reduced from 1.5rem */
+    }
+    
+    .subject-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin: 1rem 0; /* Reduced from 1.5rem */
+    }
+    
+    .subject-card {
+      background-color: rgba(30, 30, 47, 0.9);
+      border: 2px solid transparent;
+      border-radius: 12px;
+      padding: 1.2rem 0.8rem; /* Reduced from 1.5rem 1rem */
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .subject-card:hover {
+      border-color: var(--mint);
+      transform: translateY(-5px);
+    }
+    
+    .subject-icon {
+      width: 50px; /* Reduced from 60px */
+      height: 50px; /* Reduced from 60px */
+      background-color: var(--blue);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.8rem; /* Reduced from 1rem */
+      color: var(--white);
+      font-size: 1.5rem; /* Reduced from 1.8rem */
+      transition: all 0.3s ease;
+    }
+    
+    .subject-card:hover .subject-icon {
+      background-color: var(--mint);
+      transform: scale(1.1);
+    }
+    
+    .subject-name {
+      color: var(--mint);
+      font-weight: 500;
+      font-size: 1.1rem; /* Reduced from 1.2rem */
+      margin: 0;
+    }
+    
+    /* Responsive styles */
+    @media screen and (max-width: 992px) {
+      .features {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    
+    @media screen and (max-width: 768px) {
+      header {
+        padding: 1rem 1.5rem;
+      }
+      
+      .mobile-menu-btn {
+        display: block;
+      }
+      
+      nav {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        height: 100vh;
+        width: 80%;
+        max-width: 300px;
+        background-color: var(--card-bg);
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 5rem 2rem;
+        transition: right 0.3s ease;
+        box-shadow: -5px 0 15px rgba(0,0,0,0.5);
+      }
+      
+      nav.active {
+        right: 0;
+      }
+      
+      nav a {
+        margin: 1rem 0;
+        font-size: 1.2rem;
+      }
+      
+      .hero h2 {
+        font-size: 2.5rem;
+      }
+      
+      .features {
+        grid-template-columns: 1fr;
+      }
+      
+      .subject-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    @media screen and (max-width: 480px) {
+      .hero h2 {
+        font-size: 2rem;
+      }
+      
+      .hero p {
+        font-size: 1rem;
+      }
+      
+      .btn {
+        display: block;
+        width: 100%;
+        margin-bottom: 1rem;
+      }
+      
+      .section-title {
+        font-size: 1.8rem;
+      }
+      
+      .popup-card {
+        width: 95%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">
+      <i class="fas fa-book-open" style="font-size: 1.8rem; color: var(--blue);"></i>
+      <h1>ResourceSmash</h1>
+    </div>
+    
+    <button class="mobile-menu-btn">
+      <i class="fas fa-bars"></i>
+    </button>
+    
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="feedback.html">Feedback</a>
+      <a href="AboutMe.html">About Me</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero-content">
+      <h2>Your Ultimate College Resource Hub</h2>
+      <p>Find, download, and access study materials, notes, previous year questions, and much more - all in one place designed to support your academic journey.</p>
+      <div class="hero-buttons">
+        <button class="btn btn-primary">Get Started</button>
+      </div>
+    </div>
+  </section>
+
+  <h2 class="section-title">What Smash <span>Offer</span></h2>
+  <section class="features">
+    <div class="feature-card">
+      <div class="feature-icon">
+        <i class="fas fa-file-alt"></i>
+      </div>
+      <h3>Curated Notes</h3>
+      <p>Download the best and most up-to-date notes for your courses directly from our platform.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">
+        <i class="fas fa-question-circle"></i>
+      </div>
+      <h3>Previous Year Questions</h3>
+      <p>Access a vast library of past exam papers and practice them before your exams.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">
+        <i class="fas fa-users"></i>
+      </div>
+      <h3>Collaboration Tools</h3>
+      <p>Work with your peers on assignments and group projects seamlessly.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">
+        <i class="fas fa-tasks"></i>
+      </div>
+      <h3>Assignments</h3>
+      <p>Get access to solved and unsolved assignment sheets with just one click.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">
+        <i class="fas fa-flask"></i>
+      </div>
+      <h3>Practicals</h3>
+      <p>Lab manuals and experiment files to make your practicals stress-free.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">
+        <i class="fas fa-lightbulb"></i>
+      </div>
+      <h3>Exam Tips</h3>
+      <p>Curated strategies to tackle exams with confidence and clarity.</p>
+    </div>
+  </section>
+
+  <!-- Added Testimonials Section with Famous Tech Leaders -->
+  <section class="testimonials">
+    <h2 class="section-title">What <span>Past Users</span> Say</h2>
+    <div class="testimonial-container">
+      <div class="testimonial-card">
+        <div class="testimonial-text">
+          "ResourceSmash would have saved me years of work! If only I had this when I was building Microsoft, I wouldn't have had to drop out of Harvard. A+ for the previous year exam papers."
+        </div>
+        <div class="testimonial-author">
+          <div class="author-avatar">BG</div>
+          <div class="author-info">
+            <h4>Bill Gates</h4>
+            <p>Founder, Microsoft</p>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-text">
+          "The notes on quantum physics helped me understand rocket science better than my own engineers. I'm considering making ResourceSmash mandatory at SpaceX and for all Mars colonists."
+        </div>
+        <div class="testimonial-author">
+          <div class="author-avatar">EM</div>
+          <div class="author-info">
+            <h4>Elon Musk</h4>
+            <p>CEO, SpaceX & Tesla</p>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-text">
+          "I searched everywhere for good study materials during college, but couldn't find them. That's why I had to build Google. ResourceSmash would have saved me the trouble!"
+        </div>
+        <div class="testimonial-author">
+          <div class="author-avatar">SP</div>
+          <div class="author-info">
+            <h4>Sundar Pichai</h4>
+            <p>CEO, Google</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="copyright">
+      <p>&copy; 2025 ResourceSmash | <a href="privacy.html">Privacy Policy</a> | <a href="terms.html">Terms of Service</a></p>
+    </div>
+  </footer>
+
+  <!-- Popup Modal -->
+  <div class="popup-overlay" id="getStartedPopup">
+    <div class="popup-card">
+      <div class="popup-header">
+        <h2>Start Your Learning Journey</h2>
+        <button class="popup-close" id="closePopup">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="popup-body">
+        <div class="popup-content">
+          <p>Choose a subject to explore resources:</p>
+          <div class="subject-grid">
+            <a href="maths.html">
+              <div class="subject-card" data-subject="maths">
+                <div class="subject-icon">
+                  <i class="fas fa-square-root-alt"></i>
+                </div>
+                <h4 class="subject-name">Maths</h4>
+              </div>
+            </a>
+              <a href="workshop.html">
+                <div class="subject-card" data-subject="workshop">
+                  <div class="subject-icon">
+                    <i class="fas fa-tools"></i>
+                  </div>
+                  <h4 class="subject-name">Workshop</h4>
+                </div>
+              </a>
+              <a href="chemistry.html">
+                <div class="subject-card" data-subject="chemistry">
+                  <div class="subject-icon">
+                    <i class="fas fa-flask"></i>
+                  </div>
+                  <h4 class="subject-name">Chemistry</h4>
+                </div>
+              </a>
+              <a href="c.html">
+                <div class="subject-card" data-subject="programming">
+                  <div class="subject-icon">
+                    <i class="fas fa-code"></i>
+                  </div>
+                  <h4 class="subject-name">Programming</h4>
+                </div>
+              </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Mobile menu functionality
+    document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+      document.querySelector('nav').classList.toggle('active');
+    });
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', function(event) {
+      const nav = document.querySelector('nav');
+      const mobileBtn = document.querySelector('.mobile-menu-btn');
+      
+      if (nav.classList.contains('active') && 
+          !nav.contains(event.target) && 
+          !mobileBtn.contains(event.target)) {
+        nav.classList.remove('active');
+      }
+    });
+    
+    // Get Started popup functionality
+    const getStartedBtn = document.querySelector('.btn-primary');
+    const popup = document.getElementById('getStartedPopup');
+    const closePopupBtn = document.getElementById('closePopup');
+    const subjectCards = document.querySelectorAll('.subject-card');
+    
+    // Open popup when Get Started is clicked
+    getStartedBtn.addEventListener('click', function() {
+      popup.classList.add('active');
+      // Prevent scrolling when popup is open
+      document.body.style.overflow = 'hidden';
+    });
+    
+    // Close popup when close button is clicked
+    closePopupBtn.addEventListener('click', function() {
+      popup.classList.remove('active');
+      // Re-enable scrolling
+      document.body.style.overflow = 'auto';
+    });
+    
+    // Close popup when clicking outside the card
+    popup.addEventListener('click', function(event) {
+      if (event.target === popup) {
+        popup.classList.remove('active');
+        document.body.style.overflow = 'auto';
+      }
+    });
+    
+    // Subject card click functionality
+    subjectCards.forEach(card => {
+      card.addEventListener('click', function() {
+        const subject = this.getAttribute('data-subject');
+        // You can redirect to subject page or perform other actions
+        console.log(`Selected subject: ${subject}`);
+        
+        // Example: Redirect to subject page
+        // window.location.href = `/${subject}.html`;
+        
+        // For now, just close the popup
+        popup.classList.remove('active');
+        document.body.style.overflow = 'auto';
+      });
+    });
+  </script>
+</body>
+</html>

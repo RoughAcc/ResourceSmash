@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ResourceSmash - Privacy Policy</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --bg-dark: #121212;
+      --card-bg: #1E1E2F;
+      --text-light: #ECECEC;
+      --blue: #6C63FF;
+      --mint: #00D1FF;
+      --purple: #B983FF;
+      --white: #FFFFFF;
+      --dark-blue: #5650d8;
+      --dark-mint: #00b8e5;
+      
+      /* Additional colors for accessibility */
+      --text-medium: #9E9E9E;
+      --text-high-contrast: #FFFFFF;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', 'Roboto', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+      line-height: 1.6;
+    }
+    
+    /* Accessibility - focus styles */
+    a:focus, button:focus {
+      outline: 2px solid var(--mint);
+      outline-offset: 3px;
+    }
+    
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+    
+    header {
+      position: sticky;
+      top: 0;
+      background-color: var(--card-bg);
+      padding: 1.5rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+      z-index: 1000;
+      transition: padding 0.3s ease;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+    
+    header h1 {
+      margin: 0;
+      padding-left: 10px;
+      font-size: 2rem;
+      letter-spacing: 0.5px;
+      color: var(--blue);
+    }
+    
+    nav {
+      display: flex;
+      align-items: center;
+    }
+    
+    nav a {
+      margin-left: 1.5rem;
+      text-decoration: none;
+      color: var(--text-light);
+      font-weight: 500;
+      transition: color 0.3s;
+      position: relative;
+    }
+    
+    nav a:hover {
+      color: var(--mint);
+    }
+    
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: var(--mint);
+      transition: width 0.3s ease;
+    }
+    
+    nav a:hover::after {
+      width: 100%;
+    }
+    
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text-light);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    
+    /* Privacy Policy Content Styles */
+    .privacy-container {
+      max-width: 800px;
+      margin: 4rem auto;
+      padding: 0 2rem;
+    }
+    
+    .privacy-header {
+      text-align: center;
+      margin-bottom: 3rem;
+      position: relative;
+    }
+    
+    .privacy-header h2 {
+      font-size: 2.5rem;
+      color: var(--white);
+      margin-bottom: 1rem;
+      position: relative;
+      display: inline-block;
+    }
+    
+    .privacy-header h2::after {
+      content: '';
+      position: absolute;
+      width: 60%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--mint), var(--purple));
+      bottom: -10px;
+      left: 20%;
+      border-radius: 2px;
+    }
+    
+    .privacy-header p {
+      color: var(--text-medium);
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin: 0 auto;
+      margin-top: 1.5rem;
+    }
+    
+    .privacy-section {
+      background-color: var(--card-bg);
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      padding: 2.5rem;
+      margin-bottom: 2.5rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .privacy-section:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+    }
+    
+    .privacy-section h3 {
+      color: var(--mint);
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+    }
+    
+    .privacy-section h3 i {
+      margin-right: 1rem;
+      color: var(--purple);
+      font-size: 1.8rem;
+    }
+    
+    .privacy-section p {
+      color: var(--text-light);
+      margin-bottom: 1rem;
+      font-size: 1.05rem;
+    }
+    
+    .privacy-section ul {
+      padding-left: 2rem;
+      margin: 1rem 0;
+    }
+    
+    .privacy-section li {
+      margin-bottom: 0.5rem;
+    }
+    
+    .highlight-box {
+      background: linear-gradient(135deg, rgba(108,99,255,0.1) 0%, rgba(0,209,255,0.1) 100%);
+      border-left: 4px solid var(--mint);
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      border-radius: 0 8px 8px 0;
+    }
+    
+    .privacy-footer {
+      text-align: center;
+      margin: 4rem 0 2rem;
+      color: var(--text-medium);
+    }
+    
+    .privacy-footer p {
+      margin-bottom: 1rem;
+    }
+    
+    .back-btn {
+      display: inline-block;
+      background-color: var(--blue);
+      color: var(--white);
+      text-decoration: none;
+      padding: 0.75rem 2rem;
+      border-radius: 8px;
+      font-weight: 500;
+      margin-top: 1.5rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 10px rgba(108,99,255,0.3);
+    }
+    
+    .back-btn:hover {
+      background-color: var(--mint);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(0,209,255,0.5);
+    }
+    
+    .back-btn i {
+      margin-right: 0.5rem;
+    }
+    
+    /* Last updated date styling */
+    .last-updated {
+      display: inline-block;
+      background-color: rgba(185,131,255,0.1);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      color: var(--purple);
+      margin-bottom: 2rem;
+    }
+    
+    /* Footer Styles */
+    footer {
+      background-color: var(--card-bg);
+      padding: 2rem;
+      margin-top: 4rem;
+    }
+    
+    .copyright {
+      text-align: center;
+      color: var(--text-medium);
+    }
+    
+    .copyright a {
+      color: var(--blue);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    
+    .copyright a:hover {
+      color: var(--mint);
+    }
+    
+    .active-link {
+      color: var(--mint) !important;
+    }
+    
+    /* Responsive styles */
+    @media screen and (max-width: 768px) {
+      header {
+        padding: 1rem 1.5rem;
+      }
+      
+      .mobile-menu-btn {
+        display: block;
+      }
+      
+      nav {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        height: 100vh;
+        width: 80%;
+        max-width: 300px;
+        background-color: var(--card-bg);
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 5rem 2rem;
+        transition: right 0.3s ease;
+        box-shadow: -5px 0 15px rgba(0,0,0,0.5);
+      }
+      
+      nav.active {
+        right: 0;
+      }
+      
+      nav a {
+        margin: 1rem 0;
+        font-size: 1.2rem;
+      }
+      
+      .privacy-header h2 {
+        font-size: 2rem;
+      }
+      
+      .privacy-section {
+        padding: 1.5rem;
+      }
+    }
+    
+    @media screen and (max-width: 480px) {
+      .privacy-header h2 {
+        font-size: 1.8rem;
+      }
+      
+      .privacy-section h3 {
+        font-size: 1.3rem;
+      }
+      
+      .privacy-section {
+        padding: 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">
+      <i class="fas fa-book-open" style="font-size: 1.8rem; color: var(--blue);"></i>
+      <h1>ResourceSmash</h1>
+    </div>
+    
+    <button class="mobile-menu-btn">
+      <i class="fas fa-bars"></i>
+    </button>
+    
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="feedback.html">Feedback</a>
+      <a href="AboutMe.html">About Me</a>
+    </nav>
+  </header>
+
+  <div class="privacy-container">
+    <div class="privacy-header">
+      <h2>Privacy Policy</h2>
+      <div class="last-updated">Last Updated: May 2, 2025</div>
+      <p>At ResourceSmash, I value your privacy. This Privacy Policy outlines how I handle information when you use our website.</p>
+    </div>
+    
+    <div class="privacy-section">
+      <h3><i class="fas fa-shield-alt"></i> Our Privacy Policy</h3>
+      <p>ResourceSmash does not require user authentication or personal details to access the site. It is a free resource hub designed for students preparing for exams.</p>
+      
+      <div class="highlight-box">
+        <p>We believe that educational resources should be freely accessible without barriers. You can browse, download, and use our materials without creating an account or providing personal information.</p>
+      </div>
+      
+      <p>Our primary goal is to provide valuable academic resources to help students.</p>
+    </div>
+    
+    <div class="privacy-section">
+      <h3><i class="fas fa-chart-bar"></i> Use of Information</h3>
+      <p>While no personal data is collected, ResourceSmash may gather general information like browser type, visit time, and date to improve user experience.</p>
+      
+      <p>This non-identifiable information helps Me:</p>
+      <ul>
+        <li>Understand how users interact with our website</li>
+        <li>Identify and resolve technical issues</li>
+        <li>Enhance the overall functionality of ResourceSmash</li>
+        <li>Make data-driven decisions about future improvements</li>
+      </ul>
+      
+      <p>This information is collected anonymously and cannot be used to identify individual users.</p>
+    </div>
+    
+    <div class="privacy-section">
+      <h3><i class="fas fa-lock"></i> Data Security</h3>
+      <p>You are not required to submit personal information to use ResourceSmash. However, if you provide contact details in the feedback section, the developer ensures it will not be misused.</p>
+      
+      <div class="highlight-box">
+        <p>Any contact information voluntarily provided through our feedback forms is:</p>
+        <ul>
+          <li>Used solely for the purpose of responding to your inquiry</li>
+          <li>Never shared with third parties</li>
+          <li>Stored securely and deleted once no longer needed</li>
+        </ul>
+      </div>
+      
+      <p>I value your trust and committed to protecting any information you choose to share with us.</p>
+    </div>
+    
+    <div class="privacy-section">
+      <h3><i class="fas fa-sync"></i> Changes in Privacy Policy</h3>
+      <p>The privacy policy may be updated at any time. Users are encouraged to review it periodically to stay informed.</p>
+      
+      <p>While I may make changes to our privacy practices, My commitment to protecting your information remains constant. Any significant changes to this policy will be highlighted on our website.</p>
+    </div>
+    
+    <div class="privacy-footer">
+      <p>If you have any questions or concerns about our Privacy Policy, please don't hesitate to contact us through the feedback section.</p>
+      <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Home</a>
+    </div>
+  </div>
+
+  <footer>
+    <div class="copyright">
+      <p>&copy; 2025 ResourceSmash | <a href="#" class="active-link">Privacy Policy</a> | <a href="terms.html">Terms of Service</a></p>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu functionality
+    document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+      document.querySelector('nav').classList.toggle('active');
+    });
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', function(event) {
+      const nav = document.querySelector('nav');
+      const mobileBtn = document.querySelector('.mobile-menu-btn');
+      
+      if (nav.classList.contains('active') && 
+          !nav.contains(event.target) && 
+          !mobileBtn.contains(event.target)) {
+        nav.classList.remove('active');
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ResourceSmash - Feedback</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --bg-dark: #121212;
+      --card-bg: #1E1E2F;
+      --text-light: #ECECEC;
+      --blue: #6C63FF;
+      --mint: #00D1FF;
+      --purple: #B983FF;
+      --white: #FFFFFF;
+      --dark-blue: #5650d8;
+      --dark-mint: #00b8e5;
+      
+      /* Additional colors for accessibility */
+      --text-medium: #9E9E9E;
+      --text-high-contrast: #FFFFFF;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', 'Roboto', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+      line-height: 1.6;
+    }
+    
+    /* Accessibility - focus styles */
+    a:focus, button:focus, input:focus, textarea:focus, select:focus {
+      outline: 2px solid var(--mint);
+      outline-offset: 3px;
+    }
+    
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+    
+    header {
+      position: sticky;
+      top: 0;
+      background-color: var(--card-bg);
+      padding: 1.5rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+      z-index: 1000;
+      transition: padding 0.3s ease;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+    
+    header h1 {
+      margin: 0;
+      padding-left: 10px;
+      font-size: 2rem;
+      letter-spacing: 0.5px;
+      color: var(--blue);
+    }
+    
+    nav {
+      display: flex;
+      align-items: center;
+    }
+    
+    nav a {
+      margin-left: 1.5rem;
+      text-decoration: none;
+      color: var(--text-light);
+      font-weight: 500;
+      transition: color 0.3s;
+      position: relative;
+    }
+    
+    nav a:hover {
+      color: var(--mint);
+    }
+    
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: var(--mint);
+      transition: width 0.3s ease;
+    }
+    
+    nav a:hover::after {
+      width: 100%;
+    }
+    
+    .active-nav {
+      color: var(--mint);
+    }
+    
+    .active-nav::after {
+      width: 100%;
+    }
+    
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text-light);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    
+    /* Feedback Section Styles */
+    .feedback-section {
+      padding: 5rem 2rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .section-title {
+      text-align: center;
+      margin-bottom: 3rem;
+      color: var(--white);
+      font-size: 2.2rem;
+    }
+    
+    .section-title span {
+      color: var(--mint);
+    }
+    
+    .section-description {
+      text-align: center;
+      margin-bottom: 3rem;
+      color: var(--text-medium);
+      font-size: 1.1rem;
+    }
+    
+    .feedback-card {
+      background-color: var(--card-bg);
+      border-radius: 16px;
+      padding: 2.5rem;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+      margin-bottom: 3rem;
+    }
+    
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: var(--text-light);
+      font-weight: 500;
+    }
+    
+    .form-control {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      font-size: 1rem;
+      border: 2px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      background-color: rgba(30,30,47,0.5);
+      color: var(--text-light);
+      transition: all 0.3s ease;
+    }
+    
+    .form-control:focus {
+      border-color: var(--blue);
+      background-color: rgba(30,30,47,0.7);
+    }
+    
+    .form-select {
+      appearance: none;
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236C63FF' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      background-size: 1.2em;
+    }
+    
+    textarea.form-control {
+      min-height: 150px;
+      resize: vertical;
+    }
+    
+    .rating-container {
+      display: flex;
+      gap: 1rem;
+      margin-top: 0.5rem;
+    }
+    
+    .rating-star {
+      font-size: 2rem;
+      color: rgba(255,255,255,0.2);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    
+    .rating-star:hover, .rating-star.active {
+      color: var(--mint);
+    }
+    
+    .btn {
+      display: inline-block;
+      padding: 0.75rem 2rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: 500;
+      cursor: pointer;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+      transition: transform 0.2s, background-color 0.3s, box-shadow 0.3s;
+    }
+    
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.7s;
+      z-index: -1;
+    }
+    
+    .btn:hover::before {
+      left: 100%;
+    }
+    
+    .btn-primary {
+      background-color: var(--blue);
+      color: var(--white);
+      box-shadow: 0 4px 15px rgba(108,99,255,0.4);
+    }
+    
+    .btn-primary:hover {
+      background-color: var(--mint);
+      transform: scale(1.05);
+      box-shadow: 0 6px 20px rgba(0,209,255,0.6);
+    }
+    
+    .btn-primary:active {
+      transform: scale(1);
+      box-shadow: 0 2px 8px rgba(108,99,255,0.3);
+    }
+    
+    .btn-block {
+      display: block;
+      width: 100%;
+    }
+    
+    /* Success message */
+    .success-message {
+      background-color: rgba(0,209,255,0.1);
+      border: 2px solid var(--mint);
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1.5rem;
+      color: var(--mint);
+      display: none;
+    }
+    
+    .success-message.show {
+      display: block;
+      animation: fadeIn 0.5s ease;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* Features section */
+    .features-mini {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin: 3rem 0;
+    }
+    
+    .feature-mini {
+      background-color: var(--card-bg);
+      padding: 1.5rem;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      transition: all 0.3s ease;
+    }
+    
+    .feature-mini:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+    }
+    
+    .feature-mini i {
+      font-size: 2rem;
+      color: var(--blue);
+      margin-bottom: 1rem;
+    }
+    
+    .feature-mini h3 {
+      color: var(--purple);
+      margin-bottom: 0.5rem;
+      font-size: 1.2rem;
+    }
+    
+    .feature-mini p {
+      color: var(--text-medium);
+      font-size: 0.9rem;
+    }
+    
+    footer {
+      background-color: var(--card-bg);
+      padding: 3rem 2rem;
+      padding-top: 0px;
+      margin-top: 3rem;
+    }
+    
+    .copyright {
+      text-align: center;
+      padding-top: 2rem;
+      margin-top: 2rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      color: var(--text-medium);
+    }
+    
+    .copyright a {
+      color: var(--blue);
+      text-decoration: none;
+    }
+    
+    /* Responsive styles */
+    @media screen and (max-width: 768px) {
+      header {
+        padding: 1rem 1.5rem;
+      }
+      
+      .mobile-menu-btn {
+        display: block;
+      }
+      
+      nav {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        height: 100vh;
+        width: 80%;
+        max-width: 300px;
+        background-color: var(--card-bg);
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 5rem 2rem;
+        transition: right 0.3s ease;
+        box-shadow: -5px 0 15px rgba(0,0,0,0.5);
+      }
+      
+      nav.active {
+        right: 0;
+      }
+      
+      nav a {
+        margin: 1rem 0;
+        font-size: 1.2rem;
+      }
+      
+      .feedback-card {
+        padding: 1.5rem;
+      }
+      
+      .features-mini {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    @media screen and (max-width: 480px) {
+      .section-title {
+        font-size: 1.8rem;
+      }
+      
+      .btn {
+        display: block;
+        width: 100%;
+      }
+      
+      .rating-container {
+        justify-content: space-between;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">
+      <i class="fas fa-book-open" style="font-size: 1.8rem; color: var(--blue);"></i>
+      <h1>ResourceSmash</h1>
+    </div>
+    
+    <button class="mobile-menu-btn">
+      <i class="fas fa-bars"></i>
+    </button>
+    
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="#" class="active-nav">Feedback</a>
+      <a href="AboutMe.html">About Me</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <section class="feedback-section">
+      <h2 class="section-title">Share Your <span>Feedback</span></h2>
+      <p class="section-description">Your insights help Me improve ResourceSmash. Let Me know what you think about our platform!</p>
+      
+      <div class="success-message" id="successMessage">
+        <i class="fas fa-check-circle"></i> Thank you for your feedback! I appreciate your input and will use it to improve ResourceSmash.
+      </div>
+      
+      <div class="feedback-card">
+        <form id="feedbackForm">
+          <div class="form-group">
+            <label for="message">Your Feedback</label>
+            <textarea class="form-control" id="message" name="message" rows="5" required placeholder="Share your thoughts, suggestions, or report any issues you've encountered while using ResourceSmash..."></textarea>
+          </div>
+          
+          <div class="form-group">
+            <label for="name">Your Name</label>
+            <input type="text" class="form-control" id="name" name="name" required>
+          </div>
+          
+          <button type="submit" class="btn btn-primary btn-block">
+            <i class="fas fa-paper-plane"></i> Submit Feedback
+          </button>
+        </form>
+      </div>
+      
+      <h3 class="section-title">Why Your Feedback <span>Matters</span></h3>
+      
+      <div class="features-mini">
+        <div class="feature-mini">
+          <i class="fas fa-lightbulb"></i>
+          <h3>Improvements</h3>
+          <p>Your suggestions help Me identify areas where I can enhance ResourceSmash.</p>
+        </div>
+        
+        <div class="feature-mini">
+          <i class="fas fa-bullseye"></i>
+          <h3>Relevance</h3>
+          <p>I want to ensure our resources are relevant to your academic needs.</p>
+        </div>
+        
+        <div class="feature-mini">
+          <i class="fas fa-users"></i>
+          <h3>Community</h3>
+          <p>Your feedback helps Me build a better platform for all students.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <div class="copyright">
+      <p>&copy; 2025 ResourceSmash | <a href="privacy.html">Privacy Policy</a> | <a href="terms.html">Terms of Service</a></p>
+    </div>
+  </footer>
+
+  <!-- FormJS script for handling form submissions -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script>
+    // Mobile menu functionality
+    document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+      document.querySelector('nav').classList.toggle('active');
+    });
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', function(event) {
+      const nav = document.querySelector('nav');
+      const mobileBtn = document.querySelector('.mobile-menu-btn');
+      
+      if (nav.classList.contains('active') && 
+          !nav.contains(event.target) && 
+          !mobileBtn.contains(event.target)) {
+        nav.classList.remove('active');
+      }
+    });
+    
+    // No more star rating functionality needed
+    
+    // Form submission with FormJS
+    document.getElementById('feedbackForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Get form data
+      const name = document.getElementById('name').value;
+      const message = document.getElementById('message').value;
+      
+      // Validate required fields
+      if (!name || !message) {
+        alert("Please fill in all required fields.");
+        return;
+      }
+      
+      // Construct the data to send
+      const formData = {
+        name: name,
+        message: message,
+        _subject: "New Feedback from ResourceSmash",
+        _replyto: "noreply@resourcesmash.com"  // You can change this if you want replies to go somewhere specific
+      };
+      
+      // FormJS endpoint URL - You need to replace this with your own form endpoint
+      // For FormJS, FormSubmit, or Formspree, they'll give you a specific URL
+      const formEndpoint = "https://formsubmit.co/YOUR_EMAIL_HERE";  // Replace YOUR_EMAIL_HERE with your actual email
+      
+      // Send the form data using FormSubmit (or your preferred form service)
+      // For demonstration purposes, we'll simulate a successful submission
+      
+      // In a real implementation with FormSubmit, you would use:
+      /*
+      $.ajax({
+        url: formEndpoint,
+        method: "POST",
+        data: formData,
+        dataType: "json",
+        success: function(response) {
+          showSuccessMessage();
+        },
+        error: function(error) {
+          alert("There was an error submitting your feedback. Please try again.");
+        }
+      });
+      */
+      
+      // Simulate form submission (for demo)
+      setTimeout(function() {
+        showSuccessMessage();
+      }, 1000);
+    });
+    
+    function showSuccessMessage() {
+      // Show success message
+      const successMessage = document.getElementById('successMessage');
+      successMessage.classList.add('show');
+      
+      // Reset form
+      document.getElementById('feedbackForm').reset();
+      
+      // Hide success message after 5 seconds
+      setTimeout(function() {
+        successMessage.classList.remove('show');
+      }, 5000);
+    }
+  </script>
+</body>
+</html>

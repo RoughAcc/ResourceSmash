@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ResourceSmash - Mathematics</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --bg-dark: #121212;
+      --card-bg: #1E1E2F;
+      --text-light: #ECECEC;
+      --blue: #6C63FF;
+      --mint: #00D1FF;
+      --purple: #B983FF;
+      --white: #FFFFFF;
+      --dark-blue: #5650d8;
+      --dark-mint: #00b8e5;
+      --header-bg: #1b1b2e;
+      
+      /* Additional colors for accessibility */
+      --text-medium: #9E9E9E;
+      --text-high-contrast: #FFFFFF;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', 'Roboto', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+      line-height: 1.6;
+    }
+    
+    /* Accessibility - focus styles */
+    a:focus, button:focus {
+      outline: 2px solid var(--mint);
+      outline-offset: 3px;
+    }
+    
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+    
+    header {
+      position: sticky;
+      top: 0;
+      background-color: var(--card-bg);
+      padding: 1.5rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+      z-index: 1000;
+      transition: padding 0.3s ease;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+    }
+    
+    header h1 {
+      margin: 0;
+      padding-left: 10px;
+      font-size: 2rem;
+      letter-spacing: 0.5px;
+      color: var(--blue);
+    }
+    
+    nav {
+      display: flex;
+      align-items: center;
+    }
+    
+    nav a {
+      margin-left: 1.5rem;
+      text-decoration: none;
+      color: var(--text-light);
+      font-weight: 500;
+      transition: color 0.3s;
+      position: relative;
+    }
+    
+    nav a:hover {
+      color: var(--mint);
+    }
+    
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: var(--mint);
+      transition: width 0.3s ease;
+    }
+    
+    nav a:hover::after {
+      width: 100%;
+    }
+    
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text-light);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    
+    .subject-title {
+      font-size: 4rem;
+      color: var(--mint);
+      margin: 2rem 0;
+      padding-left: 2rem;
+    }
+    
+    /* Accordion Styles */
+    .accordion-container {
+      max-width: 1000px;
+      margin: 0 auto 3rem;
+    }
+    
+    .accordion {
+      margin-bottom: 1rem;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    
+    .accordion-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: var(--card-bg);
+      padding: 1.2rem 1.5rem;
+      cursor: pointer;
+      position: relative;
+      transition: background-color 0.3s;
+    }
+    
+    .accordion-header:hover {
+      background-color: #252543;
+    }
+    
+    .accordion-title {
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: var(--white);
+    }
+    
+    .accordion-icon {
+      color: var(--mint);
+      font-size: 1.5rem;
+      transition: transform 0.3s;
+    }
+    
+    .accordion-content {
+      background-color: #191928;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+    }
+    
+    .accordion.active .accordion-content {
+      max-height: 800px; /* Increased to accommodate mobile layout */
+    }
+    
+    .accordion.active .accordion-icon {
+      transform: rotate(180deg);
+    }
+    
+    /* Resource Grid */
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      padding: 1.5rem;
+    }
+    
+    .resource-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      background-color: #23233a;
+      border-radius: 8px;
+      padding: 1.5rem 1rem;
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+    }
+    
+    .resource-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+    }
+    
+    .resource-icon {
+      font-size: 2rem;
+      color: var(--white);
+      background-color: var(--blue);
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      transition: background-color 0.3s;
+    }
+    
+    .resource-item:hover .resource-icon {
+      background-color: var(--mint);
+    }
+    
+    .resource-title {
+      color: var(--text-light);
+      font-weight: 500;
+    }
+    
+    footer {
+      background-color: var(--card-bg);
+      padding: 1.5rem 2rem;
+      text-align: center;
+    }
+    
+    .copyright {
+      color: var(--text-medium);
+    }
+    
+    .copyright a {
+      color: var(--blue);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    
+    .copyright a:hover {
+      color: var(--mint);
+    }
+
+    /* Notification popup styles */
+    .notification-popup {
+      position: fixed;
+      top: 120px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: var(--blue);
+      color: var(--white);
+      padding: 20px 30px;
+      border-radius: 10px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      animation: fadeIn 0.5s ease;
+      max-width: 90%;
+      width: 500px;
+      cursor: pointer;
+    }
+    
+    .notification-popup i {
+      margin-right: 15px;
+      font-size: 1.5rem;
+    }
+    
+    .notification-popup p {
+      font-weight: 500;
+      font-size: 1.2rem;
+      margin: 0;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translate(-50%, -20px); }
+      to { opacity: 1; transform: translate(-50%, 0); }
+    }
+    
+    @keyframes fadeOut {
+      from { opacity: 1; transform: translate(-50%, 0); }
+      to { opacity: 0; transform: translate(-50%, -20px); }
+    }
+    
+    .notification-popup.fade-out {
+      animation: fadeOut 0.5s ease forwards;
+    }
+    
+    /* Responsive Styles */
+    @media screen and (max-width: 992px) {
+      .resource-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    
+    @media screen and (max-width: 768px) {
+      header {
+        padding: 1rem 1.5rem;
+      }
+      
+      .mobile-menu-btn {
+        display: block;
+      }
+      
+      nav {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        height: 100vh;
+        width: 80%;
+        max-width: 300px;
+        background-color: var(--card-bg);
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 5rem 2rem;
+        transition: right 0.3s ease;
+        box-shadow: -5px 0 15px rgba(0,0,0,0.5);
+        z-index: 1001;
+      }
+      
+      nav.active {
+        right: 0;
+      }
+      
+      nav a {
+        margin: 1rem 0;
+        font-size: 1.2rem;
+      }
+      
+      .subject-title {
+        font-size: 3rem;
+        text-align: center;
+        padding-left: 0;
+      }
+      
+      /* Modified mobile grid - now 2x2 layout */
+      .resource-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+      }
+      
+      .notification-popup {
+        font-size: 1rem;
+        padding: 15px 20px;
+        width: 90%;
+      }
+      
+      .notification-popup p {
+        font-size: 1rem;
+      }
+    }
+    
+    @media screen and (max-width: 480px) {
+      header h1 {
+        font-size: 1.5rem;
+      }
+      
+      .subject-title {
+        font-size: 2.5rem;
+      }
+      
+      /* Modified mobile grid for smallest screens */
+      .resource-grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.75rem;
+      }
+      
+      .resource-item {
+        flex: 0 0 calc(50% - 0.75rem);
+        padding: 1rem 0.75rem;
+      }
+      
+      /* Make the resource icons slightly smaller on mobile */
+      .resource-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+      }
+      
+      .resource-title {
+        font-size: 0.9rem;
+      }
+      
+      .accordion-title {
+        font-size: 1.2rem;
+      }
+      
+      /* Adjust padding for better spacing on small screens */
+      .accordion-content {
+        padding: 0.5rem;
+      }
+    }
+    
+    /* Extra small screens optimization */
+    @media screen and (max-width: 320px) {
+      .resource-grid {
+        padding: 1rem 0.5rem;
+      }
+      
+      .resource-item {
+        flex: 0 0 100%;
+        margin-bottom: 0.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <i class="fas fa-book-open" style="font-size: 1.8rem; color: var(--blue);"></i>
+      <h1>ResourceSmash</h1>
+    </div>
+    
+    <button class="mobile-menu-btn">
+      <i class="fas fa-bars"></i>
+    </button>
+    
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="feedback.html">Feedback</a>
+      <a href="AboutMe.html">About Me</a>
+    </nav>
+  </header>
+
+  <!-- Rest of the page content remains unchanged -->
+  <h1 class="subject-title">MATHS</h1>
+  
+  <div class="accordion-container">
+    <!-- Unit 1 -->
+    <div class="accordion">
+      <div class="accordion-header">
+        <div class="accordion-title">UNIT : 1 Random variable and discrete probability distribution</div>
+        <div class="accordion-icon">
+          <i class="fas fa-chevron-down"></i>
+        </div>
+      </div>
+      <div class="accordion-content">
+        <div class="resource-grid">
+          <div class="resource-item">
+            <div class="resource-icon">
+              <i class="fas fa-list-ul"></i>
+            </div>
+            <div class="resource-title">Syllabus</div>
+          </div>
+          <div class="resource-item">
+            <div class="resource-icon">
+              <i class="fas fa-file-alt"></i>
+            </div>
+            <div class="resource-title">Notes</div>
+          </div>
+          <div class="resource-item">
+            <div class="resource-icon">
+              <i class="fas fa-tasks"></i>
+            </div>
+            <div class="resource-title">Assignment</div>
+          </div>
+          <div class="resource-item">
+            <div class="resource-icon">
+              <i class="fas fa-question-circle"></i>
+            </div>
+            <div class="resource-title">PYQs</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Unit 2 -->
+    <div class="accordion">
+      <div class="accordion-header">
+        <div class="accordion-title">UNIT : 2 Continuous and bivariate probability distribution</div>
+        <div class="accordion-icon">
+          <i class="fas fa-chevron-down"></i>
+        </div>
+      </div>
+      <div class="accordion-content">
+        <div class="resource-grid">
+          <div class="resource-item">
+            <div class="resource-icon">
+              <i class="fas fa-list-ul"></i>
+            </div>
+            <div class="resource-title">Syllabus</div>
+          </div>
+          <div class="resource-item">
+            <div class="resource-icon">
+              <i class="fas fa-file-alt"></i>
+            </div>
+            <div class="resource-title">Notes</div>
+          </div>
+          <div class="resource-item">
+            <div class="resource-icon">
+              <i class="fas fa-tasks"></i>
+            </div>
+            <div class="resource-title">Assignment</div>
+          </div>
+          <div class="resource-item">
+            <div class="resource-icon">
+              <i class="fas fa-question-circle"></i>
+            </div>
+            <div class="resource-title">PYQs</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Unit 3 -->
+    <div class="accordion">
+      <div class="accordion-header">
+        <div class="accordion-title">UNIT : 3 Basic Statistics</div>
+        <div class="accordion-icon">
+          <i class="fas fa-chevron-down"></i>
+        </div>
+      </div>
+      <div class="accordion-content">
+        <div class="resource-grid">
+          <div class="resource-item">
+            <div class="resource-icon">
+              <i class="fas fa-list-ul"></i>
+            </div>
+            <div class="resource-title">Syllabus</div>
+          </div>
+          <div class="resource-item">
+            <div class="resource-icon">
+              <i class="fas fa-file-alt"></i>
+            </div>
+            <div class="resource-title">Notes</div>
+          </div>
+          <div class="resource-item">
+            <div class="resource-icon">
+              <i class="fas fa-tasks"></i>
+            </div>
+            <div class="resource-title">Assignment</div>
+          </div>
+          <div class="resource-item">
+            <div class="resource-icon">
+              <i class="fas fa-question-circle"></i>
+            </div>
+            <div class="resource-title">PYQs</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Unit 4 -->
+    <div class="accordion">
+      <div class="accordion-header">
+        <div class="accordion-title">UNIT : 4 Applied Statistics</div>
+        <div class="accordion-icon">
+          <i class="fas fa-chevron-down"></i>
+        </div>
+      </div>
+      <div class="accordion-content">
+        <div class="resource-grid">
+          <div class="resource-item">
+            <div class="resource-icon">
+              <i class="fas fa-list-ul"></i>
+            </div>
+            <div class="resource-title">Syllabus</div>
+          </div>
+          <div class="resource-item">
+            <div class="resource-icon">
+              <i class="fas fa-file-alt"></i>
+            </div>
+            <div class="resource-title">Notes</div>
+          </div>
+          <div class="resource-item">
+            <div class="resource-icon">
+              <i class="fas fa-tasks"></i>
+            </div>
+            <div class="resource-title">Assignment</div>
+          </div>
+          <div class="resource-item">
+            <div class="resource-icon">
+              <i class="fas fa-question-circle"></i>
+            </div>
+            <div class="resource-title">PYQs</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notification Popup -->
+  <div class="notification-popup" id="updateNotification">
+    <i class="fas fa-sync-alt"></i>
+    <p>Resources will be updated regularly. Keep revisiting!</p>
+  </div>
+
+  <footer>
+    <div class="copyright">
+      <p>&copy; 2025 ResourceSmash | <a href="privacy.html">Privacy Policy</a> | <a href="terms.html">Terms of Service</a></p>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu functionality
+    document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+      document.querySelector('nav').classList.toggle('active');
+    });
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', function(event) {
+      const nav = document.querySelector('nav');
+      const mobileBtn = document.querySelector('.mobile-menu-btn');
+      
+      if (nav.classList.contains('active') && 
+          !nav.contains(event.target) && 
+          !mobileBtn.contains(event.target)) {
+        nav.classList.remove('active');
+      }
+    });
+    
+    // Accordion functionality
+    const accordionHeaders = document.querySelectorAll('.accordion-header');
+    
+    accordionHeaders.forEach(header => {
+      header.addEventListener('click', function() {
+        const accordion = this.parentElement;
+        accordion.classList.toggle('active');
+        
+        // Close other open accordions (optional)
+        // Uncomment the below code if you want only one accordion open at a time
+        /*
+        const activeAccordions = document.querySelectorAll('.accordion.active');
+        activeAccordions.forEach(activeAccordion => {
+          if (activeAccordion !== accordion) {
+            activeAccordion.classList.remove('active');
+          }
+        });
+        */
+      });
+    });
+    
+    // Google Drive links for each resource and unit
+    const driveLinks = {
+      "UNIT : 1 Random variable and discrete probability distribution": {
+        "Syllabus": "https://drive.google.com/drive/folders/1RJW2TMvHW2EsUQKVEIs5R_O1k85nS4iG",
+        "Notes": "https://drive.google.com/drive/folders/1W_0W-nNbyAbCboOtyfZatCBjR0Gxk99y",
+        "Assignment": "https://drive.google.com/drive/folders/1QjGVSRauqVpc_5gtM8iwNmTsufzXCPsy",
+        "PYQs": "https://drive.google.com/drive/folders/1C9PfhsZuzn4gV0jU4gug40fKiUolvOab"
+      },
+      "UNIT : 2 Continuous and bivariate probability distribution": {
+        "Syllabus": "https://drive.google.com/drive/folders/1RJW2TMvHW2EsUQKVEIs5R_O1k85nS4iG",
+        "Notes": "https://drive.google.com/drive/folders/1YA-BVhUnCpYdSocm_O-r-Nohbaucn-ux",
+        "Assignment": "https://drive.google.com/drive/folders/1QjGVSRauqVpc_5gtM8iwNmTsufzXCPsy",
+        "PYQs": "https://drive.google.com/drive/folders/1C9PfhsZuzn4gV0jU4gug40fKiUolvOab"
+      },
+      "UNIT : 3 Basic Statistics": {
+        "Syllabus": "https://drive.google.com/drive/folders/1RJW2TMvHW2EsUQKVEIs5R_O1k85nS4iG",
+        "Notes": "https://drive.google.com/drive/folders/1CJhh59mVZ8XXXfTpV_QnXHrXxHJRj0K8",
+        "Assignment": "https://drive.google.com/drive/folders/1QjGVSRauqVpc_5gtM8iwNmTsufzXCPsy",
+        "PYQs": "https://drive.google.com/drive/folders/1C9PfhsZuzn4gV0jU4gug40fKiUolvOab"
+      },
+      "UNIT : 4 Applied Statistics": {
+        "Syllabus": "https://drive.google.com/drive/folders/1RJW2TMvHW2EsUQKVEIs5R_O1k85nS4iG",
+        "XNotes": "",
+        "Assignment": "https://drive.google.com/drive/folders/1QjGVSRauqVpc_5gtM8iwNmTsufzXCPsy",
+        "PYQs": "https://drive.google.com/drive/folders/1C9PfhsZuzn4gV0jU4gug40fKiUolvOab"
+      }
+    };
+    
+    // Resource item click handler with Google Drive links
+    const resourceItems = document.querySelectorAll('.resource-item');
+    
+    resourceItems.forEach(item => {
+      item.addEventListener('click', function() {
+        // Show loading state
+        this.classList.add('loading');
+        
+        const resourceType = this.querySelector('.resource-title').textContent;
+        const unitTitle = this.closest('.accordion').querySelector('.accordion-title').textContent;
+        
+        // Get the Google Drive link for this resource
+        const driveLink = driveLinks[unitTitle]?.[resourceType];
+        
+        if (driveLink) {
+          // Open the link in a new tab
+          window.open(driveLink, '_blank');
+        } else {
+          console.log(`No link found for ${resourceType} in ${unitTitle}`);
+          // Show a notification to the user
+          alert("This resource is not available yet. Check back later!");
+        }
+        
+        // Remove loading state after a delay
+        setTimeout(() => {
+          this.classList.remove('loading');
+        }, 1000);
+      });
+    });
+    
+    // Notification popup functionality
+    const notification = document.getElementById('updateNotification');
+    
+    // Make notification disappear when clicked
+    notification.addEventListener('click', function() {
+      this.classList.add('fade-out');
+      setTimeout(() => {
+        this.style.display = 'none';
+      }, 500);
+    });
+    
+    // Make notification disappear automatically after 5 seconds
+    setTimeout(() => {
+      notification.classList.add('fade-out');
+      setTimeout(() => {
+        notification.style.display = 'none';
+      }, 500);
+    }, 5000);
+  </script>
+</body>
+</html>

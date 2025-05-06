@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ResourceSmash - About Me</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --bg-dark: #121212;
+      --card-bg: #1E1E2F;
+      --text-light: #ECECEC;
+      --blue: #6C63FF;
+      --mint: #00D1FF;
+      --purple: #B983FF;
+      --white: #FFFFFF;
+      --dark-blue: #5650d8;
+      --dark-mint: #00b8e5;
+      --header-bg: #1b1b2e;
+      --code-accent: #E91E63;
+      
+      /* Additional colors for accessibility */
+      --text-medium: #9E9E9E;
+      --text-high-contrast: #FFFFFF;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', 'Roboto', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+      line-height: 1.6;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh; /* Full viewport height */
+    }
+    
+    /* Accessibility - focus styles */
+    a:focus, button:focus {
+      outline: 2px solid var(--mint);
+      outline-offset: 3px;
+    }
+    
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+    
+    header {
+      position: sticky;
+      top: 0;
+      background-color: var(--card-bg);
+      padding: 1.5rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+      z-index: 1000;
+      transition: padding 0.3s ease;
+      width: 100%; /* Ensure full width */
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+    }
+    
+    header h1 {
+      margin: 0;
+      padding-left: 10px;
+      font-size: 2rem;
+      letter-spacing: 0.5px;
+      color: var(--blue);
+    }
+    
+    nav {
+      display: flex;
+      align-items: center;
+    }
+    
+    nav a {
+      margin-left: 1.5rem;
+      text-decoration: none;
+      color: var(--text-light);
+      font-weight: 500;
+      transition: color 0.3s;
+      position: relative;
+    }
+    
+    nav a:hover {
+      color: var(--mint);
+    }
+    
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: var(--mint);
+      transition: width 0.3s ease;
+    }
+    
+    nav a:hover::after {
+      width: 100%;
+    }
+    
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text-light);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    
+    /* Main content area */
+    main {
+      flex: 1;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+    
+    .content-container {
+      width: 100%;
+      max-width: 1200px;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    /* Image Container Styling - Completely revamped for mobile */
+    .gallery {
+      display: grid;
+      width: 100%;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin: 1rem 0;
+    }
+    
+    .gallery-item {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .gallery-item img {
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      border-radius: 20px;
+      object-fit: cover;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .gallery-item img:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+    }
+
+    footer {
+      background-color: var(--card-bg);
+      padding: 1.5rem 2rem;
+      text-align: center;
+      width: 100%;
+      margin-top: auto;
+    }
+    
+    .copyright {
+      color: var(--text-medium);
+    }
+    
+    .copyright a {
+      color: var(--blue);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+     
+    .copyright a:hover {
+      color: var(--mint);
+    }
+    
+    /* Enhanced Responsive Styles */
+    @media screen and (max-width: 768px) {
+      header {
+        padding: 1rem 1.5rem;
+      }
+      
+      .mobile-menu-btn {
+        display: block;
+      }
+      
+      nav {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        height: 100vh;
+        width: 80%;
+        max-width: 300px;
+        background-color: var(--card-bg);
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 5rem 2rem;
+        transition: right 0.3s ease;
+        box-shadow: -5px 0 15px rgba(0,0,0,0.5);
+        z-index: 1001;
+      }
+      
+      nav.active {
+        right: 0;
+      }
+      
+      nav a {
+        margin: 1rem 0;
+        font-size: 1.2rem;
+      }
+      
+      .content-container {
+        padding: 1.5rem;
+      }
+      
+      .gallery {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+    }
+    
+    @media screen and (max-width: 480px) {
+      header h1 {
+        font-size: 1.5rem;
+      }
+      
+      .content-container {
+        padding: 1rem;
+      }
+      
+      .gallery-item img {
+        border-radius: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- HEADER: Don't modify this section when updating content -->
+  <header>
+    <div class="logo">
+      <i class="fas fa-book-open" style="font-size: 1.8rem; color: var(--blue);"></i>
+      <h1>ResourceSmash</h1>
+    </div>
+    
+    <button class="mobile-menu-btn">
+      <i class="fas fa-bars"></i>
+    </button>
+    
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="feedback.html">Feedback</a>
+      <a href="#" class="active-nav">About Me</a>
+    </nav>
+  </header>
+  <!-- END HEADER -->
+
+  <!-- MAIN CONTENT: Completely redesigned for responsive layout -->
+  <main>
+    <div class="content-container">
+      <div class="gallery">
+        <div class="gallery-item">
+          <img src="ghibli.jpeg" alt="Ghibli Image"> 
+        </div>
+        <div class="gallery-item">
+          <img src="ChatGPT my self.png" alt="ChatGPT">
+        </div>
+      </div>
+    </div>
+  </main>
+  <!-- END MAIN CONTENT -->
+
+  <!-- FOOTER: Don't modify this section when updating content -->
+  <footer>
+    <div class="copyright">
+      <p>&copy; 2025 ResourceSmash | <a href="privacy.html">Privacy Policy</a> | <a href="terms.html">Terms of Service</a></p>
+    </div>
+  </footer>
+  <!-- END FOOTER -->
+
+  <script>
+    // Mobile menu functionality
+    document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+      document.querySelector('nav').classList.toggle('active');
+    });
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', function(event) {
+      const nav = document.querySelector('nav');
+      const mobileBtn = document.querySelector('.mobile-menu-btn');
+      
+      if (nav.classList.contains('active') && 
+          !nav.contains(event.target) && 
+          !mobileBtn.contains(event.target)) {
+        nav.classList.remove('active');
+      }
+    });
+  </script>
+</body>
+</html>
